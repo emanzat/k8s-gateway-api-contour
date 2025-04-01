@@ -1,6 +1,49 @@
 # k8s-gateway-api-contour
 ![image](https://github.com/user-attachments/assets/15b4e88f-d870-4012-b72e-53a9b8e86236)
 
+
+# Installation de l'implémentation Contour
+
+## Provisionnement dynamique
+
+```sh
+kubectl apply -f https://projectcontour.io/quickstart/contour-gateway-provisioner.yaml
+```
+
+## Création d'un GatewayClass
+
+```sh
+kubectl apply -f - <<EOF
+kind: GatewayClass
+apiVersion: gateway.networking.k8s.io/v1beta1
+metadata:
+  name: contour
+spec:
+  controllerName: projectcontour.io/gateway-controller
+EOF
+```
+
+## Création d'un Gateway
+
+```sh
+kubectl apply -f - <<EOF
+kind: Gateway
+apiVersion: gateway.networking.k8s.io/v1beta1
+metadata:
+  name: contour
+  namespace: projectcontour
+spec:
+  gatewayClassName: contour
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+      allowedRoutes:
+        namespaces:
+          from: All
+EOF
+```
+
 # Introduction
 
 Dans notre article précédent, nous avons largement couvert l'API Gateway de Kubernetes, en mettant l'accent sur des implémentations clés telles que le routage HTTP, le routage basé sur les en-têtes, la redirection HTTP et la réécriture des routes. En nous appuyant sur ces bases, nous allons maintenant explorer d'autres cas d'utilisation afin d'approfondir notre compréhension de cet outil puissant. Suivez-nous pour découvrir des scénarios concrets illustrant la polyvalence et la praticité de l'API Gateway de Kubernetes.
