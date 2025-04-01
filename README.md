@@ -61,7 +61,9 @@ Nous allons documenter les scénarios suivants :
 La ressource `HTTPRoute` permet de répartir le trafic entre plusieurs services backend en fonction de poids définis. Cette fonctionnalité est utile pour gérer les déploiements progressifs, le canary testing ou les situations d'urgence.
 
 ### Exemple de configuration :
-
+```yaml
+kubectl apply -f https://raw.githubusercontent.com/projectcontour/contour/release-1.23/examples/example-workload/gatewayapi/kuard/kuard.yaml
+```
 ```yaml
 kind: HTTPRoute
 apiVersion: gateway.networking.k8s.io/v1beta1
